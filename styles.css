@@ -18,7 +18,7 @@ body {
     margin: 0; /* Remove any default margins */
     padding: 0; /* Remove any default padding */
     height: 100vh; /* Set the height to the full viewport height */
-      
+    overflow: hidden !important;    
 }
 
 
