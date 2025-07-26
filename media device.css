@@ -579,7 +579,7 @@ left: 0vw !important;
 
 .social-media-icons i {
   font-size: 2vw;
-  font-family: "Font Awesome 6 Brands" !important;
+  font-family: "Font Awesome 6 Brands", "Font Awesome 6 Free" !important;
   line-height: 1;
   margin: 0;
   padding: 0;
