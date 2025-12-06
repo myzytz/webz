@@ -743,7 +743,7 @@ body {
 }
 
 #inspector-message-text {
-  width: 30vw; 
+  width: 29vw; 
   height: auto; 
   word-wrap: break-word; 
   font-size: 1.1vw;
@@ -971,5 +971,6 @@ body {
   color: #1427cf;
   font-weight: normal !important;
 }
+
 
 }
