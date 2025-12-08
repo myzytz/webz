@@ -479,8 +479,8 @@ body {
 
 #youtube-short-container iframe {
   position: fixed;
-  width: 14vw;
-  height: 51vh;
+  width: 15vw;
+  height: 23vw;
   left: 40vw;
   top: 23vh;
   border-radius: 0.5vw;
@@ -971,5 +971,6 @@ body {
   color: #1427cf;
   font-weight: normal !important;
 }
+
 
 }
