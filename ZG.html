@@ -25,16 +25,19 @@ overflow-x: hidden !important;
 
 @media only screen and (max-width: 823px) and (orientation: landscape) {
 
- body {
+html, body {
+  height: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body {
   background-image: url('https://i.namu.wiki/i/HlT9F7BedElvgXILpmMeBEb91gKdlG9bRVyVgzGM2GYvh5HefvoX5AGy97c0JRh3ySSFLhw35R2A1MJU1-QB_Q.webp') !important;
   background-size: 100% 100% !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
-  height: 100vh !important;
-  width: 100vw !important;
-  margin: 0 !important;
-  overflow: hidden !important;
- }
+}
 
 
   /* Sunflower*/
@@ -231,4 +234,5 @@ window.addEventListener('resize', checkOrientation);
 </body>
 
 </html>
+
 
