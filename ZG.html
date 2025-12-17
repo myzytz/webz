@@ -1481,7 +1481,7 @@ function swapImage(img) {
 
 <script>
   var countdownInterval;
-  var countdownValue = 5;
+  var countdownValue = 3.5;
   var isCountdownRunning = false;
   var isCountdownFinished = false;
 
@@ -1497,7 +1497,7 @@ function swapImage(img) {
     isCountdownRunning = true;
     document.getElementById('countdown').style.display = 'block';
     document.getElementById('countdown').innerHTML = "Mao ni ako makita sa ako bintana...";
-    countdownValue = 5;
+    countdownValue = 3.5;
     countdownInterval = setInterval(function() {
       countdownValue--;
       if (countdownValue === 0) {
@@ -1542,4 +1542,5 @@ function swapImage(img) {
 
 
 </html>
+
 
