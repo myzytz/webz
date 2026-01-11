@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Tetris</title>
+<style>
+body {
+  margin: 0;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.game-container {
+  position: relative;
+  width: 100%;
+  max-width: 20vw;
+  aspect-ratio: 3/5;
+  max-height: 60vh;
+}
+
+.score {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  font-size: 24px;
+}
+
+canvas {
+  border: 1px solid black;
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.controls button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 5px;
+  touch-action: manipulation;
+  width: 60px;
+  height: 60px;
+}
+
+.controls button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.arrow-btns {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 2vw ;
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    max-width: 98vw !important;
+    max-height: 80.6vh !important;
+    margin-top: 1vh !important;
+  }
+  .score {
+    top: -40px;
+    right: 10px;
+    font-size: 18px;
+    margin-top: 20px !important;
+  }
+  .controls button {
+    width: 40px !important;
+    height: 40px !important;
+    margin: 2px !important;
+  }
+  .arrow-btns {
+    gap: 15vw !important;
+  }
+}
+
+
+</style>
+</head>
+<body>
+<div class="game-container">
+<div class="score">Score: <span id="score">0</span></div>
+<canvas id="canvas"></canvas>
+</div>
+<div class="controls">
+  <div class="arrow-btns">
+    <button id="left-btn" style="transform: scaleX(-1);" ><img src="https://www.freeiconspng.com/thumbs/arrow-icon/right-arrow-icon-27.png" alt="Left"></button>
+    <button id="down-btn"><img src="https://www.freeiconspng.com/thumbs/arrow-down-icon-png/arrow-down-icon-png-3.png" alt="Down"></button>
+    <button id="rotate-btn"><img src="https://static.vecteezy.com/system/resources/thumbnails/022/951/427/small/rotation-arrow-icon-png.png" alt="Rotate"></button>
+    <button id="right-btn"><img src="https://www.freeiconspng.com/thumbs/arrow-icon/right-arrow-icon-27.png" alt="Right"></button>
+  </div>
+</div>
+<script>
+// GET REFERENCES TO THE CANVAS AND SCORE ELEMENT
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const container = document.querySelector('.game-container');
+const scoreElement = document.getElementById('score');
+canvas.width = container.clientWidth;
+canvas.height = container.clientHeight;
+
+// DEFINE GAME CONSTANTS AND VARIABLES
+const gridWidth = 13;
+const gridSize = Math.floor((canvas.width - 2) / gridWidth);
+const gridHeight = Math.floor((canvas.height - 2) / gridSize);
+let score = 0;
+let gameOver = false;
+let paddingX, paddingY;
+let particles = [];
+
+// TETRIS SHAPES
+let pieces = [
+  [[1, 1], [1, 1]], // O
+  [[1, 0, 0], [1, 1, 1]], // T
+  [[0, 0, 1], [1, 1, 1]], // L
+  [[1, 1, 1], [0, 0, 1]], // J
+  [[1, 1, 0], [0, 1, 1]], // S
+  [[0, 1, 1], [1, 1, 0]], // Z
+  [[1], [1], [1], [1]] // I
+];
+let currentPiece = getRandomPiece();
+let grid = Array(gridHeight).fill(0).map(() => Array(gridWidth).fill(0));
+
+// GET RANDOM PIECE FUNCTION
+function getRandomPiece() {
+  let piece = pieces[Math.floor(Math.random() * pieces.length)];
+  return {
+    x: Math.floor(gridWidth / 2) - Math.floor(piece[0].length / 2),
+    y: 0,
+    lastY: 0,
+    shape: piece
+  };
+}
+
+// DRAW FUNCTION
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#9e1f1f';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'white';
+  let padding = Math.min((canvas.width - gridWidth * gridSize) / 2, (canvas.height - gridHeight * gridSize) / 2);
+  paddingX = padding;
+  paddingY = padding;
+  ctx.fillRect(paddingX, paddingY, gridWidth * gridSize, gridHeight * gridSize);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(paddingX, paddingY, gridWidth * gridSize, gridHeight * gridSize);
+  ctx.clip();
+  for (let y = 0; y < gridHeight; y++) {
+    for (let x = 0; x < gridWidth; x++) {
+      if (grid[y][x] === 2) {
+        ctx.fillStyle = 'red';
+        ctx.fillRect(Math.floor(x * gridSize + paddingX), Math.floor(y * gridSize + paddingY), gridSize, gridSize);
+      } else {
+        ctx.fillStyle = grid[y][x] ? 'black' : 'white';
+        ctx.fillRect(Math.floor(x * gridSize + paddingX), Math.floor(y * gridSize + paddingY), gridSize, gridSize);
+      }
+    }
+  }
+  for (let particle of particles) {
+    ctx.fillStyle = particle.color;
+    ctx.beginPath();
+    ctx.arc(particle.x, particle.y, particle.radius, 0, 2 * Math.PI);
+    ctx.fill();
+    particle.x += particle.vx;
+    particle.y += particle.vy;
+    particle.life--;
+    if (particle.life <= 0) {
+      particles.splice(particles.indexOf(particle), 1);
+    }
+  }
+  for (let y = 0; y < currentPiece.shape.length; y++) {
+    for (let x = 0; x < currentPiece.shape[y].length; x++) {
+      if (currentPiece.shape[y][x]) {
+        ctx.fillStyle = '#b34d91';
+        ctx.fillRect(Math.floor((currentPiece.x + x) * gridSize + paddingX), Math.floor((currentPiece.y + y) * gridSize + paddingY), gridSize, gridSize);
+      }
+    }
+  }
+  ctx.restore();
+  if (gameOver) {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = `${gridSize * 2}px Arial`;
+ctx.fillStyle = 'white';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2 - gridSize);
+ctx.font = `${gridSize}px Arial`;
+ctx.fillText('Aray Kooh!', canvas.width / 2, canvas.height / 2 + gridSize);
+    ctx.fillText('Score: ' + score, canvas.width / 2, canvas.height / 2 + gridSize * 2);
+  }
+}
+
+// GAME UPDATE FUNCTION
+let lastTime = 0;
+let dropInterval = 500;
+let dropFast = false;
+
+function update(time) {
+  if (gameOver) return;
+  let deltaTime = time - lastTime;
+  lastTime = time;
+  let dropIntervalTemp = dropFast ? 15 : dropInterval;
+  if (canMove(0, 1)) {
+    currentPiece.y += deltaTime / dropIntervalTemp;
+  } else {
+    placePiece();
+    clearLines();
+    currentPiece = getRandomPiece();
+    if (checkGameOver()) {
+      gameOver = true;
+    }
+    dropFast = false;
+  }
+  draw();
+  scoreElement.textContent = score;
+  requestAnimationFrame(update);
+}
+
+// PLACE PIECE FUNCTION
+function placePiece() {
+  for (let y = 0; y < currentPiece.shape.length; y++) {
+    for (let x = 0; x < currentPiece.shape[y].length; x++) {
+      if (currentPiece.shape[y][x]) {
+        let nx = currentPiece.x + x;
+        let ny = Math.floor(currentPiece.y) + y;
+        if (ny >= 0 && ny < gridHeight && nx >= 0 && nx < gridWidth) {
+          grid[ny][nx] = 1;
+        }
+      }
+    }
+  }
+}
+
+// CHECK IF PIECE CAN MOVE FUNCTION
+function canMove(dx, dy) {
+  for (let y = 0; y < currentPiece.shape.length; y++) {
+    for (let x = 0; x < currentPiece.shape[y].length; x++) {
+      if (currentPiece.shape[y][x]) {
+        let nx = currentPiece.x + x + dx;
+        let ny = Math.floor(currentPiece.y) + y + dy;
+        if (nx < 0 || nx >= gridWidth || ny >= gridHeight || (ny >= 0 && grid[ny][nx])) {
+          return false;
+        }
+        if (ny < 0) continue;
+      }
+    }
+  }
+  return true;
+}
+
+// EXPLOTION FUNCTION
+function clearLines() {
+  for (let y = 0; y < gridHeight; y++) {
+    if (grid[y].every(cell => cell === 1)) {
+      // ADD DESTROY EFFECT
+      for (let x = 0; x < gridWidth; x++) {
+        grid[y][x] = 2; // MARK CELLS FOR DESTRUCTION
+        for (let i = 0; i < 5; i++) {
+          particles.push({
+            x: x * gridSize + paddingX + gridSize / 2,
+            y: y * gridSize + paddingY + gridSize / 2,
+            vx: Math.random() * 2 - 1,
+            vy: Math.random() * 2 - 1,
+            radius: Math.random() * 2 + 1,
+            color: 'red',
+            life: 30
+          });
+        }
+      }
+      score++;
+      playExplosionSound();
+      setTimeout(() => {
+        grid.splice(y, 1);
+        grid.unshift(Array(gridWidth).fill(0));
+      }, 200); // WAIT FOR 200MS BEFORE REMOVING THE LINE
+    }
+  }
+}
+
+// CHECK GAME OVER FUNCTION
+function checkGameOver() {
+  for (let y = 0; y < currentPiece.shape.length; y++) {
+    for (let x = 0; x < currentPiece.shape[y].length; x++) {
+      if (currentPiece.shape[y][x] && (currentPiece.y + y < 0 || grid[Math.floor(currentPiece.y) + y][currentPiece.x + x])) {
+        playGameOverSound();
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+// PLAY GAME OVER SOUND FUNCTION
+function playGameOverSound() {
+  const gameOverSound = new Audio('sounds/arayko.weba');
+  gameOverSound.currentTime = 1; // forward the sound by 1 second
+  gameOverSound.play();
+}
+
+// PLAY EXPLOSION SOUND FUNCTION
+function playExplosionSound() {
+  const explosionSound = new Audio('sounds/doom.weba');
+  explosionSound.play();
+}
+
+// EVENT LISTENERS
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft' && canMove(-1, 0)) currentPiece.x--;
+  if (e.key === 'ArrowRight' && canMove(1, 0)) currentPiece.x++;
+  if (e.key === 'ArrowDown') {
+    dropFast = true;
+  }
+  if (e.key === 'ArrowUp') {
+    let rotated = currentPiece.shape[0].map((_, i) => currentPiece.shape.map(row => row[i]).reverse());
+    let oldShape = currentPiece.shape;
+    currentPiece.shape = rotated;
+    if (!canMove(0, 0)) currentPiece.shape = oldShape;
+    if (currentPiece.x + currentPiece.shape[0].length > gridWidth) {
+      currentPiece.x = gridWidth - currentPiece.shape[0].length;
+    }
+    if (currentPiece.x < 0) {
+      currentPiece.x = 0;
+    }
+  }
+});
+
+document.addEventListener('keyup', e => {
+  if (e.key === 'ArrowDown') {
+    dropFast = false;
+  }
+});
+
+document.getElementById('right-btn').addEventListener('click', () => {
+  if (canMove(1, 0)) currentPiece.x++;
+});
+
+document.getElementById('left-btn').addEventListener('click', () => {
+  if (canMove(-1, 0)) currentPiece.x--;
+});
+
+document.getElementById('rotate-btn').addEventListener('click', () => {
+  let rotated = currentPiece.shape[0].map((_, i) => currentPiece.shape.map(row => row[i]).reverse());
+  let oldShape = currentPiece.shape;
+  currentPiece.shape = rotated;
+  if (!canMove(0, 0)) currentPiece.shape = oldShape;
+  if (currentPiece.x + currentPiece.shape[0].length > gridWidth) {
+    currentPiece.x = gridWidth - currentPiece.shape[0].length;
+  }
+  if (currentPiece.x < 0) {
+    currentPiece.x = 0;
+  }
+});
+
+requestAnimationFrame(update);
+draw();
+</script>
+</body>
+</html> 
