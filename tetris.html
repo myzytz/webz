@@ -321,17 +321,17 @@ function draw() {
   }
   ctx.restore();
   if (gameOver) {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = `${gridSize * 2}px Arial`;
-    ctx.fillStyle = 'white';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2 - gridSize);
-    ctx.font = `${gridSize}px Arial`;
-    ctx.fillText('Aray Kooh!', canvas.width / 2, canvas.height / 2 + gridSize);
-    ctx.fillText('Score: ' + score, canvas.width / 2, canvas.height / 2 + gridSize * 2);
-  }
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = `${gridSize * 2}px 'Montserrat', sans-serif`;
+  ctx.fillStyle = 'white';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2 - gridSize);
+  ctx.font = `${gridSize}px 'Montserrat', sans-serif`;
+  ctx.fillText('Aray Kooh!', canvas.width / 2, canvas.height / 2 + gridSize);
+  ctx.fillText('Score: ' + score, canvas.width / 2, canvas.height / 2 + gridSize * 2);
+}
 }
 
 // GAME UPDATE FUNCTION
@@ -594,4 +594,5 @@ function playDownSound() {
 }
 </script>
 </body>
+
 </html> 
