@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Vlogz</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <style>
+       body {
+    background-image: url('https://images.unsplash.com/photo-1567335991483-fc7088c63506?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGhpbGlwcGluZXMlMjBiZWFjaHxlbnwwfHwwfHx8MA%3D%3D') !important;
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(255, 255, 255);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+        
+        .hero-image {
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 800px; /* Optional: set a maximum width */
+        }
+
+    .story-card {
+    background-color: rgba(0, 0, 0, 0.3); /* dark transparent */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+       .media-card {
+    background-color: rgba(207, 252, 244, 0.1);
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 1px;
+}
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .scattered-container {
+            position: relative;
+            height: 300px;
+            max-width: 300px;
+            margin: 0 auto;
+            top: -20px;
+            left: -25vw;
+        }
+
+        .scattered-container img {
+            position: absolute;
+            border-radius: 2px;
+            width: 250px;
+            height: 150px;
+            cursor: pointer;
+        }
+
+       .image-container {
+    display: none;
+   cursor: pointer;
+     }
+
+
+        
+.custom-dropdown {
+  position: relative;
+  width: 200px;
+  margin: 50px auto 0;
+}
+
+.selected-option {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.arrow-down {
+  float: right;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #c5faea;
+  color: #000000;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: none;
+}
+
+.option {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: #beeee0;
+}
+
+.back-button-container {
+  position: absolute;
+  top: 5px;
+  left: -5px;
+}
+
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+/* Disable scrolling on body when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+
+.back-button img {
+  width: 2.5vw;
+  height: auto;
+  transform: scaleX(-1);
+}
+
+.back-button {
+  display: inline-block;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+
+        @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
+            body {
+        background-image: url('https://img.freepik.com/free-photo/vertical-shot-beautiful-sea-with-rocky-cliffs-trees-side_181624-5241.jpg?semt=ais_hybrid&w=740&q=80') !important;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-attachment: fixed;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 14px;
+    }
+    
+    .hero-image {
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .story-card {
+        padding: 10px;
+        width: 90%;
+        margin: 0 auto;
+    }
+    
+    .media-card {
+        padding: 5px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    
+    
+    
+    .scattered-container {
+        height: 200px;
+         left: -40px !important;
+    }
+    
+    .scattered-container img {
+       width: 100px;
+        height: 75px;
+    }
+
+    h3.mb-4 {
+        margin-top: 20px;
+    }
+
+    video, iframe {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .back-button img {
+  width: 30px !important;
+  height: auto !important;
+  transform: scaleX(-1) !important;
+}
+        }
+
+      @media only screen and (max-width: 375px) {
+    body {
+        background-image: url('https://img.freepik.com/free-photo/vertical-shot-beautiful-sea-with-rocky-cliffs-trees-side_181624-5241.jpg?semt=ais_hybrid&w=740&q=80') !important;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-attachment: fixed;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 14px;
+    }
+    
+    .hero-image {
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .story-card {
+        padding: 10px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .media-card {
+        padding: 5px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    
+    
+    
+    .scattered-container {
+        height: 200px;
+        left: -16px !important;
+    }
+    
+    .scattered-container img {
+        width: 100px;
+        height: 75px;
+    }
+
+    h3.mb-4 {
+        margin-top: 20px;
+    }
+
+    video, iframe {
+        width: 100% !important;
+        margin: 0 auto;
+    }
+
+    .back-button img {
+  width: 30px !important;
+  height: auto !important;
+  transform: scaleX(-1) !important;
+}
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="back-button-container">
+    <a href="index.html"class="back-button"> <img src="https://www.clker.com/cliparts/N/H/o/D/v/Y/dark-blue-arrow-hi.png" alt="Back"> </a>
+</div>
+
+<div class="blog-title" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; font-weight: bold; color: #0c4626; text-align: center; z-index: 1; animation: fadeOut 3.5s forwards;">THIS IS A TRAVEL BLO<a href="client.html"  id="blog">G</a></div>
+<style>
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    85.7% { /* 3 seconds out of 3.5 seconds is approximately 85.7% */
+      opacity: 1;
+      pointer-events: auto; /* Ensure it's clickable until this point */
+    }
+    85.8% { /* Immediately after 3 seconds, make it non-clickable */
+      opacity: 1; /* Keep opacity the same as the fade continues */
+      pointer-events: none;
+    }
+    100% {
+      opacity: 0;
+      pointer-events: none; /* Ensure it stays non-clickable */
+    }
+  }
+
+  #blog{
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  }
+</style>
+
+    
+    
+  <div class="custom-dropdown">
+
+ <div class="selected-option">Select a trip <i class="fas fa-chevron-down arrow-down"></i></div>
+  <ul class="options">
+    <li class="option" data-value="">Home</li>
+    <li class="option" data-value="#siquijor-trip">Siquijor Trip</li>
+    <li class="option" data-value="#Hotspring-trip">Baslay Hotspring</li>
+  </ul>
+</div>
+
+
+<!-- Siquijor Trip -->
+<section id="siquijor-trip" style="display: none;">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-aqua mb-4" style="color:aquamarine;">Siquijor Trip</h2>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi-Fx3BuqqWIsRpdbzAB1vHmN-RozxAb_1JredF7ClZouB4kT2YGE3Ak-YUcEtjmSW8gzZInw3r0hTR_uFG2H5YHrMXkpRdrptIzUyUklXUaXhVzKZWYfp06lkcR_0pU4N2rpja2X-TlnyM/s1600/siquijor-24hours-travel-guide-01.jpg" alt="Travel Image" class="hero-image mb-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="story-card mb-4">
+                    <p>"I'm thrilled to share my second adventure to the enchanting island of Siquijor, a trip that was all about carefree exploration and reconnecting with friends. At the invitation of some dear friends who call Siquijor home, I embarked on a journey to discover the island's hidden gems. We opted for a relaxed approach, renting a cozy room at a local resort and spending our days meandering around the island, soaking up its natural beauty and warm atmosphere. Every moment was a treasure, and I'm already counting down the days until my next visit. Siquijor, I'll be back soon!"</p>
+                </div>
+            </div>
+        </div>
+
+       
+     <div style="margin-bottom: 5vh;"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="mb-4">Photos</h3>
+                <div class="scattered-container" onclick="this.style.display = 'none'; document.querySelector('.image-container').style.display = 'grid';">
+                   <img src="siq/1.jfif" style="top: 100px; left: 110px; transform: rotate(-20deg); z-index: 2;" />
+                   <img src="siq/2.jfif" style="top: 150px; left: 140px; transform: rotate(25deg); z-index: 2;" />
+                   <img src="siq/3.jfif" style="top: 180px; left: 120px; transform: rotate(-10deg); z-index: 2;" />
+                   <img src="siq/4.jfif" style="top: 150px; left: 80px; transform: rotate(20deg); z-index: 2;" />
+                   <img src="siq/5.jfif" style="top: 100px; left: 50px; transform: rotate(-30deg); z-index: 2;" />
+                   <img src="https://i.imgur.com/l3cwoju.jpg" style="top: 50px; left: 120px; transform: rotate(15deg); z-index: 3;" />
+                   <img src="https://siquijordirectory.com/wp-content/uploads/2019/01/siquijor-port-1.jpg" style="top: 80px; left: 160px; transform: rotate(-25deg); z-index: 1;" />
+                   <img src="https://firsttimetravels.com/wp-content/uploads/2016/03/IMG_5850.jpg" style="top: 50px; left: 80px; transform: rotate(10deg); z-index: 1;" />
+                   <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjzT54n9D3Y6VgeauZ3HvPHmPHhUo8KycoIK96SUabUoyz-RabILt0IecuHrHE4DMOYGSpMj5kY6uPtdHFjMOWLCCbnpZVUcDfKu28uA0n8f1_NpZumwejOiRIhPBZMOo9H45hyyrHHudrh/s1600/1.jpg" style="top: 120px; left: 200px; transform: rotate(-5deg); z-index: 1;" />
+                   <img src="https://www.geekyexplorer.com/wp-content/uploads/2017/04/must-visit-places-siquijor-island-philippines-salagdoong-beach.jpg" style="top: 160px; left: 100px; transform: rotate(30deg); z-index: 1;" />
+                   <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/366815614.jpg?k=f05f359d0362f1f5a5391122f81e206be43a83debb0e0f82b92845c5aba2fd54&o=" style="top: 120px; left: 160px; transform: rotate(-15deg); z-index: 1;" />  </div>
+               
+                   <div class="image-container">
+                    <img src="https://i.imgur.com/l3cwoju.jpg" />
+                    <img src="https://siquijordirectory.com/wp-content/uploads/2019/01/siquijor-port-1.jpg" />
+                    <img src="https://firsttimetravels.com/wp-content/uploads/2016/03/IMG_5850.jpg" />
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjzT54n9D3Y6VgeauZ3HvPHmPHhUo8KycoIK96SUabUoyz-RabILt0IecuHrHE4DMOYGSpMj5kY6uPtdHFjMOWLCCbnpZVUcDfKu28uA0n8f1_NpZumwejOiRIhPBZMOo9H45hyyrHHudrh/s1600/1.jpg" />
+                    <img src="https://thumbs.dreamstime.com/b/cambugahay-falls-tiered-waterfall-popular-swimming-siquijor-island-philippines-cambugahay-falls-tiered-waterfall-138422473.jpg" />
+                    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/366815614.jpg?k=f05f359d0362f1f5a5391122f81e206be43a83debb0e0f82b92845c5aba2fd54&o=" />
+                    <img src="https://www.fabasianlifestyle.com/wp-content/uploads/2025/04/1-IMG_3956-2.jpg" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/The_Oldest_Convent_in_Asia.jpg/1024px-The_Oldest_Convent_in_Asia.jpg" />
+                   <img src="siq/2.jfif" />
+                   <img src="siq/3.jfif" />
+                   <img src="siq/4.jfif" />
+                   <img src="siq/5.jfif" />
+                </div>
+            </div>
+        </div>
+
+         <div style="margin-bottom: 15vh;"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="mb-4">Videos</h3>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2" >Paliton 1</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/q8TCUyyhZgU" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2" >Paliton 2</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/Cg4tqK_Tb1c" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2" >Salagdoong 1</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/Io46IEtOK0Y" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2" >Salagdoong 2</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/jFSxlH9a4xQ" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2" >Salagdoong Dive 1</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/gnS3xZvtpkQ" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2" >Salagdoong Dive 2</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/SdThflAoXWY" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2" >Fiesta</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/B9v9yrAEop4" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- Baslay Hotspring -->
+<section id="Hotspring-trip" style="display: none;">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-aqua mb-4" style="color:aquamarine;">Baslay Hotspring</h2>
+                <img src="https://live.staticflickr.com/65535/55107840579_3f41e9a410_b.jpg" alt="Travel Image" class="hero-image mb-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="story-card mb-4">
+                    <p>"I'd always dreamed of visiting the Baslay Dauin Hotspring, even after a near miss during a previous trip. The thought of experiencing it lingered until, with a sudden burst of perfect weather, enough energy, and a little extra cash, I decided to just go for it – no elaborate plans needed! And what an experience it was. The hotsprings offered a stunning overlook and a series of tiered stairs that reminded me so much of the beautiful Cambugahay Falls in Siquijor, only here, the stairs were even longer, leading to a delightful difference: wonderfully hot water! It truly was a nice and spontaneous journey."</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 5vh;"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="mb-4">Photos</h3>
+                <div class="scattered-container" onclick="this.style.display = 'none'; this.parentNode.querySelector('.image-container').style.display = 'grid';">
+                    <img class="image-1falls" src="https://live.staticflickr.com/65535/55107960835_3b0c2fe004_b.jpg" style="top: 100px; left: 110px; transform: rotate(-20deg); z-index: 3; height: 10vw; width: auto;" />
+                   <img class="image-2stairs" src="https://live.staticflickr.com/65535/55107840579_3f41e9a410_b.jpg" style="top: 150px; left: 140px; transform: rotate(25deg); z-index: 3; " />
+                   <img class="image-3me1" src="me/me1.jfif" style="top: 180px; left: 120px; transform: rotate(-10deg); z-index: 2; height: 10vw; width: auto;" />
+                   <img class="image-4me2" src="me/me2.jfif" style="top: 150px; left: 80px; transform: rotate(20deg); z-index: 2; height: 10vw; width: auto;" />
+                   <img class="image-5" src="https://mrphilippines1974.wordpress.com/wp-content/uploads/2017/03/l1260325.jpg" style="top: 100px; left: 50px; transform: rotate(-30deg); z-index: 2;" />
+                   <img class="image-6" src="https://mrphilippines1974.wordpress.com/wp-content/uploads/2017/03/l1260317.jpg" style="top: 50px; left: 120px; transform: rotate(15deg); z-index: 1;" />
+                   <img class="image-7" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Mount_Talinis_%28Cuernos_de_Negros%29%2C_Negros_Oriental%2C_Philippines_02.JPG/760px-Mapcarta.jpg" style="top: 80px; left: 160px; transform: rotate(-25deg); z-index: 1;" />
+                   <img class="image-8" src="https://jackbellesphotographyblog.wordpress.com/wp-content/uploads/2020/09/jsp6375-hdr.jpg?w=1024" style="top: 50px; left: 80px; transform: rotate(10deg); z-index: 1;" />
+                   <img class="image-9" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/59/bf/7b/20171121-135625-largejpg.jpg?w=1200&h=1200&s=1" style="top: 120px; left: 160px; transform: rotate(-15deg); z-index: 1;" />
+                </div>
+                
+                <style>
+            
+                    @media only screen and (max-width: 375px) {
+
+       /* THIS IS FOR scattered-container */                   
+               .image-1falls {
+                  width: 23vw !important;
+                  height: auto !important;
+                    }
+
+                    .image-3me1 {
+                  width: 23vw !important;
+                  height: auto !important;
+                    }
+                    .image-4me2 {
+                  width: 23vw !important;
+                  height: auto !important;
+                    }
+
+
+                .image-2stairs {
+                width: 33vw !important;
+                  height: auto !important;
+                    }
+
+
+/* THIS IS FOR image-container */   
+ .stairs {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+.falls {
+  height: 100% !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+.me1 {
+  height: 100% !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+.me2 {
+  height: 100% !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+                    }
+                </style>
+                
+                   <div class="image-container">
+                    <img class="stairs" src="https://live.staticflickr.com/65535/55107840579_3f41e9a410_b.jpg"/>
+                    <img class="falls" src="https://live.staticflickr.com/65535/55107960835_3b0c2fe004_b.jpg" />
+                    <img class="me1" src="me/me1.jfif" />
+                    <img class="me2" src="me/me2.jfif" />
+                    <img  src="https://mrphilippines1974.wordpress.com/wp-content/uploads/2017/03/l1260325.jpg" />
+                    <img  src="https://mrphilippines1974.wordpress.com/wp-content/uploads/2017/03/l1260317.jpg" />
+                    <img  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Mount_Talinis_%28Cuernos_de_Negros%29%2C_Negros_Oriental%2C_Philippines_02.JPG/760px-Mapcarta.jpg" />
+                    <img  src="https://jackbellesphotographyblog.wordpress.com/wp-content/uploads/2020/09/jsp6375-hdr.jpg?w=1024" />
+                    <img  src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/59/bf/7b/20171121-135625-largejpg.jpg?w=1200&h=1200&s=1" />
+                    
+            </div>
+        </div>
+
+        <div style="margin-bottom: 15vh;"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="mb-4">Videos</h3>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2">Hotspring 1</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/XTB9touihIQ" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2">Hotspring 2</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/8_ypK9jvv8Q" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2">Hotspring 4</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/SbJb3P72sm8" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2">Hotspring 5</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/U4sij_RQOEc" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2">Hotspring 5</p>
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/xhmvM258tcs" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                               
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ADD MORE TRIP HERE..... -->
+ <section id="Add Trip Here..." style="display: none;">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-aqua mb-4" style="color:aquamarine;">Add Trip Here</h2>
+                <img src="put image here" alt="Travel Image" class="hero-image mb-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="story-card mb-4">
+                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porta luctus lectus id semper. Integer quis tellus dictum, aliquet mi in, blandit tellus. Donec fringilla pharetra condimentum. Nam eros justo, iaculis quis interdum ut, rutrum et leo. In nisl lacus, hendrerit ac eleifend a, pretium at lorem. Praesent quis consectetur urna. Ut massa justo, suscipit et ultricies a, ultrices in tellus. Pellentesque eget iaculis nibh. Praesent et turpis dapibus, lobortis elit quis, tempus nisl."</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="mb-4">Photos</h3>
+                <div class="scattered-container" onclick="this.style.display = 'none'; this.parentNode.querySelector('.image-container').style.display = 'grid';">
+    <img src="put image here" style="top: 100px; left: 110px; transform: rotate(-10deg);" />
+    <img src="put image here" style="top: 70px; left: 140px; transform: rotate(15deg);" />
+    <img src="put image here" style="top: 130px; left: 140px; transform: rotate(-5deg);" />
+    <img src="put image here" style="top: 100px; left: 80px; transform: rotate(10deg);" />
+    <img src="put image here" style="top: 100px; left: 170px; transform: rotate(-15deg);" />
+</div>
+                <div class="image-container">
+                    <img src="put image here" />
+                   
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="mb-4">Videos</h3>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2">Hotspring 1</p>
+                            <div class="video-wrapper">
+                                <iframe src="put video here" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 p-1">
+                        <div class="media-card">
+                            <p class="mb-2">Hotspring 2</p>
+                            <div class="video-wrapper">
+                                <iframe src="put video here" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    
+                               
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+<script>
+
+//Trip Dropdown
+const selectedOption = document.querySelector('.selected-option');
+const options = document.querySelector('.options');
+
+selectedOption.addEventListener('click', () => {
+  if (options.style.display === 'block') {
+    options.style.display = 'none';
+  } else {
+    options.style.display = 'block';
+  }
+});
+
+options.addEventListener('click', (e) => {
+  if (e.target.classList.contains('option')) {
+    const target = e.target.dataset.value;
+    document.querySelectorAll('section').forEach(function(section) {
+      section.style.display = 'none';
+    });
+    if (target !== "") {
+      document.querySelector(target).style.display = 'block';
+      selectedOption.innerHTML = e.target.textContent + ' <i class="fas fa-chevron-down arrow-down"></i>';
+    } else {
+      selectedOption.innerHTML = 'Select a trip <i class="fas fa-chevron-down arrow-down"></i>';
+    }
+    options.style.display = 'none';
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.custom-dropdown')) {
+    options.style.display = 'none';
+  }
+});
+
+//CLick images in image container view
+document.querySelectorAll('.scattered-container').forEach(function(container) {
+  container.addEventListener('click', function(e) {
+    let imageContainer = container.parentNode.querySelector('.image-container');
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = imageContainer.outerHTML;
+    document.body.appendChild(modal);
+    document.body.classList.add('modal-open');
+
+    container.style.display = 'none';
+    imageContainer.style.display = 'none';
+
+    modal.querySelector('.image-container').style.display = 'grid';
+    modal.querySelector('.image-container').style.gridTemplateColumns = 'repeat(4, 250px)';
+    modal.querySelector('.image-container').style.gap = '1px';
+    modal.querySelector('.image-container').style.position = 'absolute';
+    modal.querySelector('.image-container').style.top = '50%';
+    modal.querySelector('.image-container').style.left = '50%';
+    modal.querySelector('.image-container').style.transform = 'translate(-50%, -50%)';
+
+    Array.prototype.slice.call(modal.querySelectorAll('.image-container img')).forEach(function(img) {
+      img.style.width = '250px';
+      img.style.height = '150px';
+      img.style.objectFit = 'cover';
+    });
+
+    // Add media query to change grid template columns
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @media (max-width: 768px) {
+        .image-container {
+          grid-template-columns: repeat(4, 1fr) !important;
+          width: 90vw !important;
+          height: auto !important;
+        }
+        .image-container img {
+          width: 100% !important;
+          height: 100% !important;
+        }
+      }
+      @media (max-width: 375px) {
+        .image-container {
+          grid-template-columns: repeat(4, 1fr) !important;
+          width: 90vw !important;
+          height: auto !important;
+        }
+        .image-container img {
+          width: 100% !important;
+          height: 100% !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    modal.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        modal.remove();
+        container.style.display = 'block';
+        document.body.classList.remove('modal-open');
+      }
+    });
+
+    // Add event listener for images in the modal
+    let images = Array.prototype.slice.call(modal.querySelectorAll('img'));
+    modal.querySelectorAll('img').forEach(function(img, index) {
+      img.addEventListener('click', function() {
+        let currentIndex = index;
+        const modalImage = document.createElement('div');
+        modalImage.className = 'modal';
+        modalImage.innerHTML = `<img src="${img.src}">`;
+        document.body.appendChild(modalImage);
+        document.body.classList.add('modal-open');
+
+        let startX, startY;
+
+        modalImage.addEventListener('touchstart', function(event) {
+          startX = event.touches[0].clientX;
+          startY = event.touches[0].clientY;
+        });
+
+        modalImage.addEventListener('touchend', function(event) {
+          let endX = event.changedTouches[0].clientX;
+          let endY = event.changedTouches[0].clientY;
+
+          if (Math.abs(endX - startX) > Math.abs(endY - startY)) {
+            if (endX < startX) {
+              currentIndex = (currentIndex + 1) % images.length;
+            } else {
+              currentIndex = (currentIndex - 1 + images.length) % images.length;
+            }
+            modalImage.querySelector('img').src = images[currentIndex].src;
+          }
+        });
+
+        modalImage.addEventListener('click', function(event) {
+          if (event.target === modalImage) {
+            modalImage.remove();
+            document.body.classList.remove('modal-open');
+          } else if (event.target.tagName === 'IMG') {
+            const rect = modalImage.querySelector('img').getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const width = rect.width;
+
+            if (x < width / 2) {
+              currentIndex = (currentIndex - 1 + images.length) % images.length;
+            } else {
+              currentIndex = (currentIndex + 1) % images.length;
+            }
+
+            modalImage.querySelector('img').src = images[currentIndex].src;
+          }
+        });
+      });
+    });
+  });
+});
+</script>
+</html>
